@@ -1,0 +1,52 @@
+.pdf-root{
+  position: relative;
+  width: 50%;
+}
+
+.pdf-canvas{
+  background: #fff;
+  box-shadow: 0 0 0 1px #eee inset;
+  /* position: relative; */
+}
+
+.pdf-loading{
+  padding: 40px;
+  color: #666;
+}
+/* 
+.pdf-actions{
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.9);
+  z-index: 40;
+  padding: 8px;
+}
+
+.highlight-box{
+  position: absolute;
+  border: 2px solid #ffd54f;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.mask{
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 45;
+  pointer-events: none;
+}
+
+.mask.left{ left: 0; right: auto }
+.mask.right{ right: 0 }
+.mask.top{ top: 0 }
+.mask.bottom{ bottom: 0; height: calc(100% - var(--mask-top,0px)); }
+ */
+
+.pdf-iframe{
+  width: 100%;
+  height: calc(100vh - 40px);
+  border: none;
+}

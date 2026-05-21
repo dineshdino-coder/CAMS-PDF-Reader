@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^2.5.0",
+    "@google/generative-ai": "^0.24.1",
+    "@huggingface/inference": "^4.13.16",
+    "axios": "^1.16.1",
+    "canvas": "^3.2.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "node-fetch": "^3.3.2",
+    "pdf-parse": "^2.4.5",
+    "pdf-poppler": "^0.2.3",
+    "pdf2pic": "^3.2.0",
+    "pdfjs-dist": "^3.11.174",
+    "sharp": "^0.34.5",
+    "tesseract.js": "^7.0.0"
+  }
+}
