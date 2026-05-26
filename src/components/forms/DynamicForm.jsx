@@ -19,19 +19,19 @@ export default function DynamicForm(props) {
         console.log("Blob to upload:", blob);
         formData.append("file", blob, "sample-form.pdf");
         console.log("FormData entries:", formData);
-        // const response = await fetch("http://localhost:5000/upload", {
-        //   method: "POST",
-        //   body: formData,
-        // });
+        const response = await fetch("http://localhost:5000/upload", {
+          method: "POST",
+          body: formData,
+        });
 
-        // const data = await response.json();
-        const data = staticformData;
+        const data = await response.json();
+        // const data = staticformData;
         // eslint-disable-next-line no-console
         console.log("upload response", data);
         const imagepdf = data.image;
         handlePdfImage(imagepdf);
-        setFields(data.fields);
-        // setFields(data.fields.fields);
+        // setFields(data.fields);
+        setFields(data.fields.fields);
       } catch (err) {
         console.error("upload error", err);
         alert("Failed to upload PDF. Please try again.",err);
