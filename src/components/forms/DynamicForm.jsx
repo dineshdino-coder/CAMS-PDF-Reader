@@ -24,6 +24,7 @@ export default function DynamicForm(props) {
           body: formData,
         });
 
+        //checking deployment
         const data = await response.json();
         // const data = staticformData;
         // eslint-disable-next-line no-console
