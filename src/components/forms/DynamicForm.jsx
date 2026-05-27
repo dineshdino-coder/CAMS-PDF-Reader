@@ -9,38 +9,43 @@ export default function DynamicForm(props) {
   const [fields, setFields] = useState([]);
   const [activeField, setActiveField] = useState(null);
   const { handlePdfImage } = useContext(Contextapi);
+  const [usingFields, setUsingFields] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function uploadSamplePdf() {
-      try {
-        const res = await fetch(samplePdf);
-        const blob = await res.blob();
-        const formData = new FormData();
-        console.log("Blob to upload:", blob);
-        formData.append("file", blob, "sample-form.pdf");
-        console.log("FormData entries:", formData);
-        const response = await fetch("http://localhost:5000/upload", {
-          method: "POST",
-          body: formData,
-        });
+  async function uploadSamplePdf() {
+    try {
+      setLoading(true);
+      const res = await fetch(samplePdf);
+      const blob = await res.blob();
+      const formData = new FormData();
+      console.log("Blob to upload:", blob);
+      formData.append("file", blob, "sample-form.pdf");
+      console.log("FormData entries:", formData);
+      const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-        //checking deployment
-        const data = await response.json();
-        // const data = staticformData;
-        // eslint-disable-next-line no-console
-        console.log("upload response", data);
-        const imagepdf = data.image;
-        handlePdfImage(imagepdf);
-        // setFields(data.fields);
-        setFields(data.fields.fields);
-      } catch (err) {
-        console.error("upload error", err);
-        alert("Failed to upload PDF. Please try again.",err);
-      }
+      const data = await response.json();
+      // const data = staticformData;
+      // eslint-disable-next-line no-console
+      console.log("upload response", data);
+      const imagepdf = data.image;
+      handlePdfImage(imagepdf);
+      // setFields(data.fields);
+      setFields(data.fields.fields);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.error("upload error", err);
+      alert("Failed to upload PDF. Please try again.", err);
     }
+  }
 
+  function handleFieldChange() {
+    setUsingFields(true);
     uploadSamplePdf();
-  }, []);
+  }
 
   function focusTriggered(field) {
     setActiveField(field);
@@ -59,7 +64,21 @@ export default function DynamicForm(props) {
     return `${year}-${month}-${day}`;
   }
 
-  return (
+  return !usingFields ? (
+    <div className="halfWidth">
+      <button onClick={() => handleFieldChange()}>Load the Fields</button>
+    </div>
+  ) : loading ? (
+    <div className="halfWidth">
+      <div className="rightHalf">
+        <div className="loader-container">
+          <div className="spinner"></div>
+
+          <p>Reading PDF and extracting fields...</p>
+        </div>
+      </div>
+    </div>
+  ) : (
     <form className="dynamic-form" noValidate>
       <h3>Extracted Fields</h3>
 

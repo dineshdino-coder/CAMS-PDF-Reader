@@ -1,11 +1,7 @@
 require("dotenv").config();
-
-const { parsePdf } = require("./pdfExtractor");
-
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const Tesseract = require("tesseract.js");
 const fs = require("fs");
 const path = require("path");
 // const fetch = require("node-fetch");
@@ -37,10 +33,6 @@ const ai = new GoogleGenAI({
 // ==========================
 
 async function extractFormFields(base64Image) {
-  // Read image as base64
-  //   const base64Image = fs.readFileSync(imagePath, {
-  //     encoding: "base64",
-  //   });
   // Gemini request
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
@@ -58,32 +50,37 @@ async function extractFormFields(base64Image) {
 
       {
         text: `
-Analyze this form image carefully.
+        Analyze this form image carefully.
 
-Extract ALL visible form fields.
+        Extract ALL visible form fields.
 
-Return ONLY valid JSON.
+        IMPORTANT RULES:
+        - DO NOT generate random or new IDs.
+        - Use ONLY the predefined field keys if they match by position or label.
+        - If a field matches a known structure, return its "id" exactly as provided in the reference list. like if fields name is posto ffice need to provide post_office.
 
-{
-  "fields": [
-    {
-      "id": "",
-      "label": "",
-      "type": "",
-      "value": "",
-      "required": false,
-      "section": "",
-      "validation": "",
-      "bbox": {
-        "top": 0.0,
-        "left": 0.0,
-        "width": 0.0,
-        "height": 0.0
-      }
-    }
-  ]
-}
-          `,
+        Return ONLY valid JSON.
+
+        {
+          "fields": [
+            {
+              "id": "",
+              "label": "",
+              "type": "",
+              "value": "",
+              "required": false,
+              "section": "",
+              "validation": "",
+              "bbox": {
+                "top": 0.0,
+                "left": 0.0,
+                "width": 0.0,
+                "height": 0.0
+              }
+            }
+          ]
+        }
+                  `,
       },
     ],
   });
@@ -159,7 +156,11 @@ app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
 
-// ----------------------------------------  Claude ai
+// ----------------------------------------  Using Claude ai
+
+// const Tesseract = require("tesseract.js");
+
+// const { parsePdf } = require("./pdfExtractor");
 
 // async function extractScannedPdf(filePath) {
 //   const data = new Uint8Array(fs.readFileSync(filePath));

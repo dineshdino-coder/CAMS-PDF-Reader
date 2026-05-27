@@ -7,7 +7,7 @@ import './styles/app.css'
 
 function App() {
 
-  const [pdfImg, setPdfImg] = useState(staticImage);
+  const [pdfImg, setPdfImg] = useState(null);
   const [fieldcoord, setFieldcoord] = useState(null);
 
   function handlePdfImage(imageData,fields) {
