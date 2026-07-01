@@ -33,6 +33,7 @@ export default function PdfRenderer(props) {
   const scaleY = imageSize.height / originalHeight;
 
   // AUTO SCROLL
+  testing
   useEffect(() => {
     if (fieldcoord && wrapperRef.current) {
       wrapperRef.current.scrollTo({
